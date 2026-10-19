@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 
 import {
     flexRender,
@@ -28,6 +29,8 @@ export function InventoryTable({ data }: InventoryTableProps) {
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
+
+    const [search, setSearch] = useState("");
 
     return (
         <div className="rounded-md border">

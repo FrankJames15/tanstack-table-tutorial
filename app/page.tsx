@@ -1,5 +1,6 @@
 import { inventory } from "@/data/inventory";
 import { InventoryTable } from "@/components/inventory-table";
+import { Suspense } from "react";
 
 export default function Home() {
     return (
@@ -12,7 +13,9 @@ export default function Home() {
                 </p>
             </div>
 
-            <InventoryTable data={inventory} />
+            <Suspense fallback={<p>Loading inventory...</p>}>
+                <InventoryTable data={inventory} />
+            </Suspense>
         </main>
     );
 }

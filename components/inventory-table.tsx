@@ -4,7 +4,9 @@ import { useState } from "react";
 import {
     flexRender,
     getCoreRowModel,
+    getFilteredRowModel,
     useReactTable,
+    getSortedRowModel,
 } from "@tanstack/react-table";
 
 import type { InventoryItem } from "@/data/inventory";
@@ -18,22 +20,32 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Input } from "./ui/input";
 
 type InventoryTableProps = {
     data: InventoryItem[];
 };
 
 export function InventoryTable({ data }: InventoryTableProps) {
+    const [search, setSearch] = useState("");
+
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
+        state: { globalFilter: search },
+        onGlobalFilterChange: setSearch,
+        getFilteredRowModel: getFilteredRowModel(),
+        getSortedRowModel: getSortedRowModel(),
     });
-
-    const [search, setSearch] = useState("");
 
     return (
         <div className="rounded-md border">
+            <Input
+                value={search}
+                placeholder="Search Products..."
+                onChange={(e) => setSearch(e.target.value)}
+            />
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
